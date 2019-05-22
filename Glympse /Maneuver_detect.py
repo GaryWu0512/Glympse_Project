@@ -9,6 +9,8 @@ import mpu
 import csv
 import os
 
+
+
 def smooth(speed, box_pts):
     box = np.ones(box_pts)/box_pts
     speed_smooth = np.convolve(speed, box, mode='same')
@@ -40,7 +42,6 @@ def RMSE(speed_cal, speed):
 
     return error
 
-
 def calculate_speed_cal(lat, long, time):
     speed = []
     speed.append(0)
@@ -69,7 +70,6 @@ def cal_speed(lat1,lon1,lat2,lon2,time):
     dist = mpu.haversine_distance((lat1, lon1), (lat2, lon2))*1000
     res = dist/time
     return res
-
 
 def fill_speed(speed, time, lat, long):
     speed_revise_number = 0
@@ -120,7 +120,6 @@ def fill_heading(heading):
     if heading[-1] == None:
         heading[-1] = heading[-2]
     return heading
-
 
 def organize_data(data):
     delkey = []
@@ -186,7 +185,6 @@ def calculate_average_speed(data, key, turning_list,number_turning):
     average_speed = total_speed/number_turning
     return average_speed
 
-
 def store_speed(dict_turning, data):
     if not os.path.isfile('total_speed.csv'):
         acs = []
@@ -247,7 +245,6 @@ def find_dic_ACC(data):
         dict_turning[key] = [breakpoint,number]
     return dict_turning,total_number
 
-
 def find_hardbrake(speed, time):
     breakpoint = []
     number = 0
@@ -297,7 +294,6 @@ def total_distance(data):
         t_distance += sp
     return t_distance
 
-
 def over_speed_limit(lat, long, speed):
     gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
     over_time = 0
@@ -318,7 +314,6 @@ def over_speed_limit(lat, long, speed):
 
     return over_time, overspeed
 
-
 def find_dic_over(data):
     dict_ov = {}
     total_number = 0
@@ -337,10 +332,14 @@ def open_file(filename):
 
 def get_info(data):
     dict_turning, turning_number = find_dic_turning(data)
+    print("Turing detect finished---------------------------------------------")
     dict_hb, hb_number = find_dic_HB(data)
+    print("Hard brake detect finished-----------------------------------------")
     dict_acc, acc_number = find_dic_ACC(data)
-
-    return dict_turning, turning_number, dict_hb, hb_number, dict_acc, acc_number
+    print("Acceleration detect finished---------------------------------------")
+    dict_ov, ov_number = find_dic_over(data)
+    print("Speeding detect finished-------------------------------------------")
+    return dict_turning, turning_number, dict_hb, hb_number, dict_acc, acc_number, dict_ov, ov_number
 
 def describe(dict_turning, data):
     aver_speed = []
@@ -379,14 +378,16 @@ def main():
     data_ogn = organize_data(data)
     print("Ticket number:", len(data_ogn))
     print("Organize data finished---------------------------------------------")
-    dict_turning, turning_number, dict_hb, hb_number, dict_acc, acc_number = get_info(data_ogn)
-    #time = total_time(data)
-    #distance = total_distance(data)
+    dict_turning, turning_number, dict_hb, hb_number, dict_acc, acc_number, dict_ov, ov_number = get_info(data_ogn)
+    time = total_time(data)
+    distance = total_distance(data)
     print("HB:", hb_number)
     print("ACC:", acc_number)
     print("Turning:", turning_number)
-    #print("Time:", time)
-    #print("Distance", distance)
+    print("Speeding:", ov_number)
+    print("Time:", time)
+    print("Distance", distance)
+
 
     store_sp = input('Do you want to store the turning speed data?(y/n)')
     if (str(store_sp) == 'y'):
