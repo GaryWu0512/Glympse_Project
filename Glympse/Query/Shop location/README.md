@@ -1,0 +1,1 @@
+#  This is the folder that stores all of the shop's location point

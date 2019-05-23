@@ -10,23 +10,23 @@ import csv
 import os
 
 
-
 def smooth(speed, box_pts):
-    box = np.ones(box_pts)/box_pts
+    box = np.ones(box_pts) / box_pts
     speed_smooth = np.convolve(speed, box, mode='same')
     return speed_smooth
+
 
 def calculate_speed_google(lat, long, time):
     gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
     speed = []
     speed.append(0)
-    for i in range(len(lat)-1):
-        t = time[i+1] - time[i]
-        start_point = [lat[i],long[i]]
-        end_point = [lat[i+1],long[i+1]]
-        direction_result = gmap.directions(start_point, end_point, mode = "driving")
+    for i in range(len(lat) - 1):
+        t = time[i + 1] - time[i]
+        start_point = [lat[i], long[i]]
+        end_point = [lat[i + 1], long[i + 1]]
+        direction_result = gmap.directions(start_point, end_point, mode="driving")
         string = direction_result[0]['legs'][0]['distance']['text']
-        sp = float(string.split()[0])*0.3048/t
+        sp = float(string.split()[0]) * 0.3048 / t
         speed.append(sp)
     speed[0] = speed[1]
     return speed
@@ -41,6 +41,7 @@ def RMSE(speed_cal, speed):
         error = total / len(speed_cal)
 
     return error
+
 
 def calculate_speed_cal(lat, long, time):
     speed = []
@@ -57,19 +58,22 @@ def calculate_speed_cal(lat, long, time):
 
     return speed
 
-def google_speed(lat1,lon1,lat2,lon2,time):
+
+def google_speed(lat1, lon1, lat2, lon2, time):
     gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
-    start_point = [lat1,lon1]
-    end_point = [lat2,lon2]
-    direction_result = gmap.directions(start_point, end_point, mode = "driving")
+    start_point = [lat1, lon1]
+    end_point = [lat2, lon2]
+    direction_result = gmap.directions(start_point, end_point, mode="driving")
     string = direction_result[0]['legs'][0]['distance']['text']
-    sp = float(string.split()[0])*0.3048/time
+    sp = float(string.split()[0]) * 0.3048 / time
     return sp
 
-def cal_speed(lat1,lon1,lat2,lon2,time):
-    dist = mpu.haversine_distance((lat1, lon1), (lat2, lon2))*1000
-    res = dist/time
+
+def cal_speed(lat1, lon1, lat2, lon2, time):
+    dist = mpu.haversine_distance((lat1, lon1), (lat2, lon2)) * 1000
+    res = dist / time
     return res
+
 
 def fill_speed(speed, time, lat, long):
     speed_revise_number = 0
@@ -102,24 +106,26 @@ def fill_speed(speed, time, lat, long):
 
     return speed
 
+
 def fill_heading(heading):
     headnone = False
     if heading[0] == None:
-        headnone= True
-    for i in range(len(heading)-1):
+        headnone = True
+    for i in range(len(heading) - 1):
         if headnone == True:
             if heading[i] != None:
-                heading[0:i] = [heading[i]]*i
+                heading[0:i] = [heading[i]] * i
                 headnone = False
         else:
             if heading[i] == None:
-                if heading[i+1] == None :
-                    heading[i] = heading[i-1]
+                if heading[i + 1] == None:
+                    heading[i] = heading[i - 1]
                 else:
-                    heading[i] = (heading[i-1]+heading[i+1])/2
+                    heading[i] = (heading[i - 1] + heading[i + 1]) / 2
     if heading[-1] == None:
         heading[-1] = heading[-2]
     return heading
+
 
 def organize_data(data):
     delkey = []
@@ -140,50 +146,54 @@ def organize_data(data):
         del data[delkey[i]]
     return data
 
+
 def find_turning(heading):
     breakpoint = []
     start = 0
     number = 0
-    for i in range(len(heading)-2):
-        diff = abs(heading[i+1]-heading[i])
+    for i in range(len(heading) - 2):
+        diff = abs(heading[i + 1] - heading[i])
         if diff > 19 and diff < 70 and start == 0:
-            if i-2<0 :
+            if i - 2 < 0:
                 breakpoint.append(0)
             else:
                 breakpoint.append(i - 2)
             start = 1
         if diff < 5 and start == 1:
 
-            angle_diff = abs(heading[i+1] - heading[breakpoint[-1]])
+            angle_diff = abs(heading[i + 1] - heading[breakpoint[-1]])
 
-            if (angle_diff < 30 or angle_diff >150) :
+            if (angle_diff < 30 or angle_diff > 150):
                 del breakpoint[-1]
                 start = 0
                 continue
             else:
-                breakpoint.append(i+2)
+                breakpoint.append(i + 2)
                 start = 0
-                number+=1
-    if len(breakpoint) %2 != 0:
+                number += 1
+    if len(breakpoint) % 2 != 0:
         del breakpoint[-1]
     return breakpoint, number
 
+
 def find_dic_turning(data):
-    dict_turning={}
+    dict_turning = {}
     total_number = 0
-    for key,value in data.items():
+    for key, value in data.items():
         breakpoint, number = find_turning(value[3])
         total_number += number
         if len(breakpoint) != 0:
-            dict_turning[key] = [breakpoint,number]
-    return dict_turning,total_number
+            dict_turning[key] = [breakpoint, number]
+    return dict_turning, total_number
 
-def calculate_average_speed(data, key, turning_list,number_turning):
+
+def calculate_average_speed(data, key, turning_list, number_turning):
     total_speed = 0
     for i in range(0, len(turning_list), 2):
-        total_speed += np.mean(data[key][2][turning_list[i]:turning_list[i+1]])
-    average_speed = total_speed/number_turning
+        total_speed += np.mean(data[key][2][turning_list[i]:turning_list[i + 1]])
+    average_speed = total_speed / number_turning
     return average_speed
+
 
 def store_speed(dict_turning, data):
     '''if not os.path.isfile('total_speed.csv'):
@@ -201,7 +211,7 @@ def store_speed(dict_turning, data):
     for key, value in dict_turning.items():
         a_speed = calculate_average_speed(data, key, dict_turning[key][0], dict_turning[key][1])
         if a_speed < 100:
-            #ticket.append(key)
+            # ticket.append(key)
             aver_speed.append(a_speed)
 
     df = pd.DataFrame({  # 'ticket_id': ticket,
@@ -210,8 +220,8 @@ def store_speed(dict_turning, data):
 
     df.to_csv("Maneuver detect/Population data/total_turning.csv", mode='a', index=False, header=False)
 
-def store_hb(hb_number, time, distance):
 
+def store_hb(hb_number, time, distance):
     df = pd.DataFrame([{  # 'ticket_id': ticket,
         'HB_number': hb_number,
         'time': time,
@@ -219,6 +229,7 @@ def store_hb(hb_number, time, distance):
     }])
 
     df.to_csv("Maneuver detect/Population data/total_HB.csv", mode='a', index=False, header=False)
+
 
 def store_ACC(ACC_number, time, distance):
     df = pd.DataFrame([{  # 'ticket_id': ticket,
@@ -228,6 +239,7 @@ def store_ACC(ACC_number, time, distance):
     }])
 
     df.to_csv("Maneuver detect/Population data/total_ACC.csv", mode='a', index=False, header=False)
+
 
 def store_ov(total_ov, ov_number, time, distance):
     if len(total_ov) == 0:
@@ -249,36 +261,37 @@ def find_ACC(speed, time):
     breakpoint = []
     start = 0
     number = 0
-    for i in range(len(speed)-1):
-        diff = speed[i+1]-speed[i]
-        if diff > 3 and start == 0 and diff<9:
-
+    for i in range(len(speed) - 1):
+        diff = speed[i + 1] - speed[i]
+        if diff > 3 and start == 0 and diff < 9:
             breakpoint.append(i)
             start = 1
         if diff < 2 and start == 1:
 
             time_diff = time[i] - time[breakpoint[-1]]
 
-            if time_diff>2:
+            if time_diff > 2:
                 breakpoint.append(i)
                 start = 0
-                number+=1
+                number += 1
             else:
                 del breakpoint[-1]
                 start = 0
                 continue
-    if len(breakpoint) %2 != 0 or len(breakpoint)== 1:
+    if len(breakpoint) % 2 != 0 or len(breakpoint) == 1:
         del breakpoint[-1]
     return breakpoint, number
 
+
 def find_dic_ACC(data):
-    dict_turning={}
+    dict_turning = {}
     total_number = 0
     for key, value in data.items():
         bp, number = find_ACC(value[2], value[4])
         total_number += number
         dict_turning[key] = [bp, number]
     return dict_turning, total_number
+
 
 def find_hardbrake(speed, time):
     breakpoint = []
@@ -291,43 +304,47 @@ def find_hardbrake(speed, time):
 
         if diff > 5 and diff < 8:
             breakpoint.append(i)
-            #td += diff
+            # td += diff
             number += 1
-    return breakpoint, number#, td
+    return breakpoint, number  # , td
+
 
 def find_dic_HB(data):
-    dict_hb={}
+    dict_hb = {}
     total_number = 0
     tdd = 0
-    for key,value in data.items():
+    for key, value in data.items():
         breakpoint, number = find_hardbrake(value[2], value[4])
-        if len(breakpoint)>0:
+        if len(breakpoint) > 0:
             if breakpoint[0] == 0:
                 del breakpoint[0]
-                number-=1
+                number -= 1
         total_number += number
-        #tdd += td
-        dict_hb[key] = [breakpoint,number]
-    return dict_hb, total_number#, tdd/total_number
+        # tdd += td
+        dict_hb[key] = [breakpoint, number]
+    return dict_hb, total_number  # , tdd/total_number
+
 
 def total_time(data):
     t_time = 0
-    for key,value in data.items():
-        if len(value[4])>1:
+    for key, value in data.items():
+        if len(value[4]) > 1:
             t_time += value[4][-1] - value[4][0]
     return t_time
+
 
 def total_distance(data):
     gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
     t_distance = 0
-    for key,value in data.items():
-        start_point = [value[0][0],value[1][0]]
-        end_point = [value[0][-1],value[1][-1]]
-        direction_result = gmap.directions(start_point, end_point, mode = "driving")
+    for key, value in data.items():
+        start_point = [value[0][0], value[1][0]]
+        end_point = [value[0][-1], value[1][-1]]
+        direction_result = gmap.directions(start_point, end_point, mode="driving")
         string = direction_result[0]['legs'][0]['distance']['text']
         sp = float(string.split()[0])
         t_distance += sp
     return t_distance
+
 
 def over_speed_limit(lat, long, speed):
     gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
@@ -349,6 +366,7 @@ def over_speed_limit(lat, long, speed):
 
     return over_time, overspeed
 
+
 def find_dic_over(data):
     dict_ov = {}
     total_number = 0
@@ -361,11 +379,13 @@ def find_dic_over(data):
 
     return dict_ov, total_number, total_overspeed
 
+
 def open_file(filename):
     with open(filename + '.json') as json_file:
         data = json.load(json_file)
 
     return data
+
 
 def get_info(data):
     dict_turning, turning_number = find_dic_turning(data)
@@ -377,6 +397,7 @@ def get_info(data):
     dict_ov, ov_number, total_ov = find_dic_over(data)
     print("Speeding detect finished-------------------------------------------")
     return dict_turning, turning_number, dict_hb, hb_number, dict_acc, acc_number, ov_number, total_ov
+
 
 def describe(dict_turning, data):
     aver_speed = []
@@ -398,15 +419,11 @@ def describe(dict_turning, data):
     print("mean = ", mean)
     print("std = ", std)
     print("count = ", count)
-    print("min = ", min,  "max =", max)
-    print("25% = ", twfive, "50% = ", half, "75% = ", sevfive )
-
-    filename = input('Do you want to save the describe if yes input the filename: ')
-
-    if (str(filename) != "n"):
-        df.describe().to_csv(filename + ".csv", index=True)
+    print("min = ", min, "max =", max)
+    print("25% = ", twfive, "50% = ", half, "75% = ", sevfive)
 
     return mean, std, count, min, max, twfive, half, sevfive
+
 
 def main():
     filename = input('Input filename: ')
@@ -416,8 +433,8 @@ def main():
     print("Ticket number:", len(data_ogn))
     print("Organize data finished---------------------------------------------")
     dict_turning, turning_number, dict_hb, hb_number, dict_acc, acc_number, ov_number, total_ov = get_info(data_ogn)
-    time = total_time(data)
-    distance = total_distance(data)
+    time = total_time(data_ogn)
+    distance = total_distance(data_ogn)
     print("HB:", hb_number)
     print("ACC:", acc_number)
     print("Turning:", turning_number)
@@ -425,16 +442,33 @@ def main():
     print("Time:", time)
     print("Distance", distance)
 
-
     store_sp = input('Do you want to store the data to population database?(y/n)')
     if (str(store_sp) == 'y'):
-        store_speed(dict_turning, data)
+        store_speed(dict_turning, data_ogn)
         store_hb(hb_number, time, distance)
         store_ACC(acc_number, time, distance)
         store_ov(total_ov, ov_number, time, distance)
 
     print("Describe turning speed:")
-    mean, std, count, min, max, twfive, half, sevfive = describe(dict_turning, data)
+    mean, std, count, min, max, twfive, half, sevfive = describe(dict_turning, data_ogn)
+
+    agent_filename = input('Do you want to save the single agent describe if yes input the filename: ')
+
+    if (str(filename) != "n"):
+        if len(total_ov) == 0:
+            ov_mean = 0
+        else:
+            ov_mean = np.mean(total_ov)
+
+        agent_info = {'Number': [len(data_ogn), time, distance, hb_number, acc_number, ov_number, ov_mean,
+                                 turning_number, mean, std]}
+
+        df = pd.DataFrame(agent_info, index=["Ticket", 'Driving Time', 'Driving Distance', 'Hard brake', 'ACC',
+                                             'Speeding', 'Speeding average', 'Turning number', 'Turning speed mean',
+                                             'Turning speed std'])
+        agent_filename = 'Maneuver detect/Single agent data/' + agent_filename
+        df.to_csv(agent_filename + ".csv", index=True)
+
 
 if __name__ == "__main__":
     gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
