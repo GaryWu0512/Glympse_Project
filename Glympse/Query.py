@@ -269,8 +269,8 @@ def main():
     ENROUTE_TRACKING = "tracking_core"
     ENROUTE_STATS = "tracking_stats"
 
-    tp = input('Query all or single agent: (a/s)')
-    if (str(tp) == "a"):
+    tp = input('Query all or single agent: (c/s/a)')
+    if (str(tp) == "c"):
         query = generate_query(ENROUTE_TRACKING)
         og = input('Input hierarchy org_id number: ')
         org_list = query.query_orgid(int(og))
@@ -283,6 +283,7 @@ def main():
 
         task_dict = find_all_tasks(total_agent, ENROUTE_TRACKING)
         filename_agent = input('Input filename for the Agent_task_dict:')
+        filename_agent = 'Query/Agent task/' + filename_agent
         dict_to_json(task_dict, str(filename_agent))
         print("Task query finished--------------------------------------------------")
 
@@ -290,11 +291,29 @@ def main():
         total_location = find_all_location(task_dict, ENROUTE_STATS)
         print("The number of task:", len(total_location))
         filename_task = input('Input filename for the Task_location_dict:')
+        filename_task = 'Query/Company location/' + filename_task
         location_dict = query.to_json(total_location, str(filename_task))
 
         print("All done")
 
+
     elif (str(tp) == "s"):
+        query = generate_query(ENROUTE_TRACKING)
+        sp = input('Input shop org_id number: ')
+        shop_agent = find_all_agent([int(sp)], ENROUTE_TRACKING)
+        print("The number of agent in the given shop number:", len(shop_agent))
+        print("Agent query finished-------------------------------------------------")
+
+        task_dict = find_all_tasks(shop_agent, ENROUTE_TRACKING)
+        print("Task query finished--------------------------------------------------")
+        print("Query location point, it might take a while...(8min)")
+        total_location = find_all_location(task_dict, ENROUTE_STATS)
+        print("The number of task:", len(total_location))
+        filename_task = input('Input filename for the Task_location_dict:')
+        filename_task = 'Query/Shop location/' + filename_task
+        location_dict = query.to_json(total_location, str(filename_task))
+
+    elif (str(tp) == "a"):
         query = generate_query(ENROUTE_TRACKING)
         ag = input('Input agent_id number: ')
         agent_task = find_all_tasks([int(ag)], ENROUTE_TRACKING)
@@ -303,6 +322,7 @@ def main():
         agent_location = find_all_location(agent_task, ENROUTE_STATS)
         print("The number of task:", len(agent_location))
         filename_task = input('Input filename for the Agent_location_dict:')
+        filename_task = 'Query/Single Agent location/' + filename_task
         agent_dict = query.to_json(agent_location, str(filename_task))
 
         print("All done")

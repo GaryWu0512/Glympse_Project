@@ -186,7 +186,7 @@ def calculate_average_speed(data, key, turning_list,number_turning):
     return average_speed
 
 def store_speed(dict_turning, data):
-    if not os.path.isfile('total_speed.csv'):
+    '''if not os.path.isfile('total_speed.csv'):
         acs = []
         df = pd.DataFrame({
             'Turning speed': acs
@@ -196,8 +196,8 @@ def store_speed(dict_turning, data):
     speed_data = pd.read_csv('total_speed.csv')
     aver_speed = speed_data["Turning speed"].tolist()
 
-    #ticket = []
-
+    #ticket = []'''
+    aver_speed = []
     for key, value in dict_turning.items():
         a_speed = calculate_average_speed(data, key, dict_turning[key][0], dict_turning[key][1])
         if a_speed < 100:
@@ -208,7 +208,42 @@ def store_speed(dict_turning, data):
         'Turning speed': aver_speed
     })
 
-    df.to_csv("total_speed.csv", index=False)
+    df.to_csv("Maneuver detect/Population data/total_turning.csv", mode='a', index=False, header=False)
+
+def store_hb(hb_number, time, distance):
+
+    df = pd.DataFrame([{  # 'ticket_id': ticket,
+        'HB_number': hb_number,
+        'time': time,
+        'distance': distance,
+    }])
+
+    df.to_csv("Maneuver detect/Population data/total_HB.csv", mode='a', index=False, header=False)
+
+def store_ACC(ACC_number, time, distance):
+    df = pd.DataFrame([{  # 'ticket_id': ticket,
+        'ACC_number': ACC_number,
+        'time': time,
+        'distance': distance,
+    }])
+
+    df.to_csv("Maneuver detect/Population data/total_ACC.csv", mode='a', index=False, header=False)
+
+def store_ov(total_ov, ov_number, time, distance):
+    if len(total_ov) == 0:
+        ov_mean = 0
+    else:
+        ov_mean = np.mean(total_ov)
+
+    df = pd.DataFrame([{  # 'ticket_id': ticket,
+        'OV_number': ov_number,
+        'Average over speed': ov_mean,
+        'time': time,
+        'distance': distance,
+    }])
+
+    df.to_csv("Maneuver detect/Population data/total_speeding.csv", mode='a', index=False, header=False)
+
 
 def find_ACC(speed, time):
     breakpoint = []
@@ -239,11 +274,11 @@ def find_ACC(speed, time):
 def find_dic_ACC(data):
     dict_turning={}
     total_number = 0
-    for key,value in data.items():
-        breakpoint, number = find_ACC(value[2], value[4])
+    for key, value in data.items():
+        bp, number = find_ACC(value[2], value[4])
         total_number += number
-        dict_turning[key] = [breakpoint,number]
-    return dict_turning,total_number
+        dict_turning[key] = [bp, number]
+    return dict_turning, total_number
 
 def find_hardbrake(speed, time):
     breakpoint = []
@@ -317,12 +352,14 @@ def over_speed_limit(lat, long, speed):
 def find_dic_over(data):
     dict_ov = {}
     total_number = 0
+    total_overspeed = []
     for key, value in data.items():
         over_time, overspeed = over_speed_limit(value[0], value[1], value[2])
         total_number += over_time
+        total_overspeed += overspeed
         dict_ov[key] = [overspeed, over_time]
 
-    return dict_ov, total_number
+    return dict_ov, total_number, total_overspeed
 
 def open_file(filename):
     with open(filename + '.json') as json_file:
@@ -337,9 +374,9 @@ def get_info(data):
     print("Hard brake detect finished-----------------------------------------")
     dict_acc, acc_number = find_dic_ACC(data)
     print("Acceleration detect finished---------------------------------------")
-    dict_ov, ov_number = find_dic_over(data)
+    dict_ov, ov_number, total_ov = find_dic_over(data)
     print("Speeding detect finished-------------------------------------------")
-    return dict_turning, turning_number, dict_hb, hb_number, dict_acc, acc_number, dict_ov, ov_number
+    return dict_turning, turning_number, dict_hb, hb_number, dict_acc, acc_number, ov_number, total_ov
 
 def describe(dict_turning, data):
     aver_speed = []
@@ -378,7 +415,7 @@ def main():
     data_ogn = organize_data(data)
     print("Ticket number:", len(data_ogn))
     print("Organize data finished---------------------------------------------")
-    dict_turning, turning_number, dict_hb, hb_number, dict_acc, acc_number, dict_ov, ov_number = get_info(data_ogn)
+    dict_turning, turning_number, dict_hb, hb_number, dict_acc, acc_number, ov_number, total_ov = get_info(data_ogn)
     time = total_time(data)
     distance = total_distance(data)
     print("HB:", hb_number)
@@ -389,9 +426,12 @@ def main():
     print("Distance", distance)
 
 
-    store_sp = input('Do you want to store the turning speed data?(y/n)')
+    store_sp = input('Do you want to store the data to population database?(y/n)')
     if (str(store_sp) == 'y'):
         store_speed(dict_turning, data)
+        store_hb(hb_number, time, distance)
+        store_ACC(acc_number, time, distance)
+        store_ov(total_ov, ov_number, time, distance)
 
     print("Describe turning speed:")
     mean, std, count, min, max, twfive, half, sevfive = describe(dict_turning, data)
