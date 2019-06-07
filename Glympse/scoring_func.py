@@ -130,21 +130,17 @@ def get_scores(maneuver_filename, sample_pop_file):
     scores = []
     stats = []
     mu, std = get_stats(sample_pop_file)
-    with open(maneuver_filename) as n:
-        reader = csv.reader(n)
-        data = list(reader)
-    hb = data[4][1]
-    stats.append(hb)
-    acc = data[5][1]
-    stats.append(acc)
-    turning = data[8][1]
-    stats.append(turning)
-    speeding_time = data[6][1]
-    stats.append(speeding_time)
-    speeding = data[7][1]
-    stats.append(speeding)
-    time = data[2][1]
-    stats.append(time)
+    with open(sample_pop_file) as pop_data:
+        reader = csv.DictReader(pop_data, delimiter=',')
+        for row in reader:
+            stats.append(float(row['2fast turn number']))
+            stats.append(float(row['4hb_number']))
+            stats.append(float(row['5acc_number']))
+            stats.append(float(row['6Average over speed']))
+            stats.append(float(row['8speeding times']))
+            stats.append(float(row['7ov_duration']))
+            time = float(row['9time'])
+            stats.append(time)
 
     if float(time) < MIN_TIME:
         raise Exception('total drive time should not be less than MIN_TIME. Total drive time was: {}'.format(time))
@@ -262,8 +258,7 @@ def get_scores_all(sample_pop_file):
 
     tot_scores = weight_score(hb_scores,acc_scores,fast_turn_scores,speeding_scores)
 
-    plot_all(hb, hb_scores, acc, acc_scores, fast_turn, fast_turn_scores, speeding, speeding_scores, tot_scores)
-
+    return tot_scores
 
 
 # testing
