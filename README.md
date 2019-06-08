@@ -1,9 +1,9 @@
 ## Overview
 
-- [MongoDB Connection](#MongoDBConnection)
+- [MongoDB Connection](#MongoDB_Connection)
 - [Query](#Query)
-- [Data Preprocessed](#DataPreprocessed)
-- [Maneuver Detection](#ManeuverDetection)
+- [Data Preprocessed](#Data_Preprocessed)
+- [Maneuver Detection](#Maneuver_Detection)
 - [Scoring](#Scoring)
 
 ## System Requirements
@@ -19,7 +19,7 @@
 ```pip install -U googlemaps```
 - mpu ```pip install git+https://github.com/MartinThoma/mpu.git```
 
-## MongoDB Connection
+## MongoDB_Connection
 
 ### Class MongoClient:
 
@@ -119,7 +119,7 @@ Output the location_dict to the json file
                             Value: an array including [latitude, longitude, speed, angle, time]
 ```
 
-## Data Preprocessed
+## Data_Preprocessed
 
 - In the Maneuver_detect.py, there are some public function relate to the data processing
 
@@ -190,7 +190,7 @@ Organize the data, including filling out missing points & delete too short locat
 :return: a dict of data after processing
 ```
 
-## Maneuver Detection
+## Maneuver_Detection
 
 #### find_dic_turning(data):
 ```
