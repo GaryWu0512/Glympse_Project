@@ -11,7 +11,7 @@
 * Agents in the sample population should have minimum driver time of 10 hours
 
 #### get_scores_example(agent_id, sample_pop_file)
-scores an agent from the sample population against the sample population
+```scores an agent from the sample population against the sample population```
 
 #### get_scores(maneuver_filename, sample_pop_file)
-scores an agent from a separate file (must be csv) against the sample population
+```scores an agent from a separate file (must be csv) against the sample population```
