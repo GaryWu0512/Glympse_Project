@@ -27,7 +27,7 @@
 
 - ReadPreference :secondary
 
-####_get_mongo_client(self, database):
+####\_get\_mongo\_client(self, database):
 ```
 Generate the single Client (readPreference :secondary) 
 
@@ -36,7 +36,7 @@ Generate the single Client (readPreference :secondary)
 :rtype: Single client
 ```
 
-####_get_mongo_client_dict(self, list_of_databases):
+####\_get\_mongo\_client\_dict(self, list\_of\_databases):
 ```
 Generate a dict of Client
 
@@ -47,7 +47,7 @@ Generate a dict of Client
          Value: client
 ```
 
-####get_client(self, database_name):
+####get\_client(self, database_name):
 ```
 Take the client of a specific database from client dict
 
@@ -67,7 +67,7 @@ Take the client of a specific database from client dict
 - Output the query result to json file
 
 
-####query_orgid(self, hierarchy):
+####query\_orgid(self, hierarchy):
 ```
 Find all relevant org_ids based on a specific hierarchy
 
@@ -75,7 +75,7 @@ Find all relevant org_ids based on a specific hierarchy
 :type hierarchy: a single hierarchy number, where a  hierarchy number is a integer
 :rtype: a list of org_id, which have the same hierarchy number
 ```
-####query_agents(self, org_id):
+####query\_agents(self, org\_id):
 ```
 Find the all agent id with the same org_id
 
@@ -85,7 +85,7 @@ Find the all agent id with the same org_id
 ```
 
 
-####query_tasks(self, agent_id):
+####query\_tasks(self, agent_id):
 ```
 Find all the tasks id done by a particular agent
 if agent did not do any task it will return None, and print out empty
@@ -97,7 +97,7 @@ if agent did not do any task it will return None, and print out empty
           Value: a list of tasks
 ```
 
-####find_locationpoints(self, task_id):
+####find\_locationpoints(self, task_id):
 ```
 Find all the location_point string according to each task_id
 
@@ -108,7 +108,7 @@ Find all the location_point string according to each task_id
           Value: a list of location point
 ```
 
-####to_json(self, location_dict, filename):
+####to\_json(self, location_dict, filename):
 ```
 Output the location_dict to the json file
 
@@ -136,7 +136,7 @@ Smooth the speed data
 :return: a list of data after smooth
 ```
 
-###google_speed(lat1, lon1, lat2, lon2, time):
+####google\_speed(lat1, lon1, lat2, lon2, time):
 ```
 Calculate the single speed between two points by using Google API
 
@@ -148,7 +148,7 @@ Calculate the single speed between two points by using Google API
 :return: speed , float
 ```
 
-####cal_speed(lat1, lon1, lat2, lon2, time):
+####cal\_speed(lat1, lon1, lat2, lon2, time):
 ```
 Calculate the single speed between two points by using mpu
 
@@ -160,7 +160,7 @@ Calculate the single speed between two points by using mpu
 :return: speed , float
 ```
 
-####fill_speed(speed, time, lat, long):
+####fill\_speed(speed, time, lat, long):
 ```
 Filling out the missing speed point, this function will check every point in given list
    if the speed = None or 0, I will recalculate the speed
@@ -172,7 +172,7 @@ Filling out the missing speed point, this function will check every point in giv
 :return: a list of speed after filling out
 ```
 
-####fill_heading(heading):
+####fill\_heading(heading):
 ```
 Filling out the missing heading point, this function will check out every point in the given list
    if the heading = None, I will fill out the missing heading
@@ -181,7 +181,7 @@ Filling out the missing heading point, this function will check out every point 
 :return: a list of heading after filling out
 ```
 
-####organize_data(data):
+####organize\_data(data):
 ```
 Organize the data, including filling out missing points & delete too short location points list
    & delete unuseful data
@@ -192,10 +192,10 @@ Organize the data, including filling out missing points & delete too short locat
 
 ## Maneuver Detection
 
-####find_dic_turning(data):
+####find\_dic_turning(data):
 ```
-Find the turning in every task and store to a new dict that including a list of turning start & end point
-    and the count of turning
+Find the turning in every task and store to a new dict that including 
+a list of turning start & end point and the count of turning
 
 :param data: a dict of data
 :return dict_turning: a dict of turning list & the count of turning
@@ -204,7 +204,7 @@ Find the turning in every task and store to a new dict that including a list of 
         [breakpoint, number]
 :return total_number: a count of turning in the data, int
 ```
-####count_fast_turn(data, key, turning_list):
+####count\_fast_turn(data, key, turning_list):
 ```
 Count the fast turn number
 
@@ -213,10 +213,10 @@ Count the fast turn number
 :param turning_list: a list of turning start & end points
 :return: the count of fast turn, int
 ```
-####find_dic_ACC(data):
+####find\_dic_ACC(data):
 ```
-Find the acceleration in every task and store to a new dict that including a list of acceleration
-    start & end point and the count of acceleration
+Find the acceleration in every task and store to a new dict that including 
+a list of acceleration start & end point and the count of acceleration
 
 :param data: a dict of data
 :return dict_acc: a dict of acceleration list & the count of acceleration
@@ -226,7 +226,7 @@ Find the acceleration in every task and store to a new dict that including a lis
 :return total_number: a count of acceleration in the data, int
 ```
 
-####find_dic_HB(data):
+####find\_dic_HB(data):
 ```
 Find the hardbrake in every task and store to a new dict that including a list of hardbrake points
     and the count of hardbrake
@@ -239,7 +239,7 @@ Find the hardbrake in every task and store to a new dict that including a list o
 :return total_number: a count of hardbrake in the data, int
 ```
 
-####total_time(data):
+####total\_time(data):
 ```
 Calculate the total task time in data
 
@@ -247,7 +247,7 @@ Calculate the total task time in data
 :return: the total task duration, unit second
 ```
 
-####find_dic_over(data):
+####find\_dic_over(data):
 ```
 Find the speeding duration & ratio & the count of speeding location points
 
@@ -260,7 +260,7 @@ Find the speeding duration & ratio & the count of speeding location points
 :return total_times: the total count of the speeding location points
 ```
 
-####get_info(data):
+####get\_info(data):
 ```
 Calculate the Speeding & turning & Hard brake & Acceleration
 
@@ -268,7 +268,7 @@ Calculate the Speeding & turning & Hard brake & Acceleration
 :return:
 ```
 
-####generate_population(data, agent_id):
+####generate\_population(data, agent_id):
 ```
 Generate the population data and store into population database
 data must be the single agent data
@@ -287,13 +287,13 @@ data must be the single agent data
 
 - Agents in the sample population should have minimum driver time of 10 hours
 
-####get_scores_example(agent_id, sample_pop_file):
+####get\_scores\_example(agent\_id, sample\_pop_file):
 
 ```
 scores an agent from the sample population against the sample population
 ```
 
-####get_scores(maneuver_filename, sample_pop_file)
+####get\_scores(maneuver\_filename, sample\_pop\_file)
 ```
 scores an agent from a separate file (must be csv) against the sample population
 ```

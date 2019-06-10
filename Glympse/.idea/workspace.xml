@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b2cb1d1f-8817-4950-879f-0f15a8f9201f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mission.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Glympse.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Glympse.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/534322.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Maneuver detect/Population data/total_ACC.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Maneuver detect/Population data/total_HB.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Maneuver detect/Population data/total_speeding.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Maneuver detect/Population data/total_turning.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Maneuver detect/Single agent data/test.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Maneuver_detect.py" beforeDir="false" afterPath="$PROJECT_DIR$/Maneuver_detect.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Query.py" beforeDir="false" afterPath="$PROJECT_DIR$/Query.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Query/Agent task/82995.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Query/Agent task/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Query/Agent task/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Query/Company location/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Query/Company location/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Query/Shop location/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Query/Shop location/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Query/Single Agent location/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Query/Single Agent location/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/total_speed.csv" beforeDir="false" />
-    </list>
+    <list default="true" id="b2cb1d1f-8817-4950-879f-0f15a8f9201f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,95 +9,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Query.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
-              <caret line="240" column="103" selection-start-line="236" selection-start-column="8" selection-end-line="240" selection-end-column="103" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Maneuver_detect.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
-              <caret line="254" column="27" selection-start-line="254" selection-start-column="5" selection-end-line="254" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#17#0" expanded="true" />
-                <element signature="e#523#1632#0" />
-                <element signature="e#1807#2028#0" />
-                <element signature="e#2311#2653#0" />
-                <element signature="e#3038#3376#0" />
-                <element signature="e#3709#3810#0" />
-                <element signature="e#4173#5034#0" />
-                <element signature="e#5609#6173#0" />
-                <element signature="e#6482#6954#0" />
-                <element signature="e#7195#8372#0" />
-                <element signature="e#9466#9682#0" />
-                <element signature="e#5843#6606#0" />
-                <element signature="e#6644#6840#0" />
-                <element signature="e#6880#7079#0" />
-                <element signature="e#7129#7512#0" />
-                <element signature="e#11889#12544#0" />
-                <element signature="e#13653#13956#0" />
-                <element signature="e#16224#17296#0" />
-                <element signature="e#17702#18165#0" />
-                <element signature="e#18594#18690#0" />
-                <element signature="e#12478#13272#0" />
-                <element signature="e#13291#15229#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="540">
-                <caret line="36" column="3" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/speedlimit.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
-              <folding>
-                <element signature="e#69472#71461#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Mission.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" selection-start-line="9" selection-end-line="12" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Maneuver detect/Population data/population_new.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="59550">
-              <caret line="3970" column="6" selection-start-line="3970" selection-end-line="3970" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -438,13 +326,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Maneuver detect/Population data/population_new.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59550">
-          <caret line="3970" column="6" selection-start-line="3970" selection-end-line="3970" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Detect Mission.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
@@ -520,6 +401,13 @@
             <caret line="36" column="3" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Maneuver detect/Population data/population_new.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59550">
+          <caret line="3970" column="6" selection-start-line="3970" selection-end-line="3970" selection-end-column="6" />
         </state>
       </provider>
     </entry>
