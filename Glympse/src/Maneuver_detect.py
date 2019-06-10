@@ -31,7 +31,7 @@ def calculate_speed_google(lat, long, time):
     :param time: a list of timestamp
     :return: a list of speed that the length is equal to input
     """
-    gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
+    gmap = googlemaps.Client(key='your Google API key')
     speed = []
     speed.append(0)
     for i in range(len(lat) - 1):
@@ -99,7 +99,7 @@ def google_speed(lat1, lon1, lat2, lon2, time):
     :param time: time interval (second)
     :return: speed , float
     """
-    gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
+    gmap = googlemaps.Client(key='your Google API key')
     start_point = [lat1, lon1]
     end_point = [lat2, lon2]
     direction_result = gmap.directions(start_point, end_point, mode="driving")
@@ -472,7 +472,7 @@ def total_distance(data):
     :param data: the dict of data
     :return: the total distance
     """
-    gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
+    gmap = googlemaps.Client(key='your Google API key')
     t_distance = 0
     for key, value in data.items():
         start_point = [value[0][0], value[1][0]]
@@ -496,7 +496,7 @@ def over_speed_limit(lat, long, speed, time):
     :return overspeed: the sum of speeding ration, float
     :return duration: Speeding duration (second)
     """
-    gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
+    gmap = googlemaps.Client(key='your Google API key')
     over_time = 0
     overspeed = 0
     temp = 0
@@ -698,5 +698,4 @@ def main():
 
 
 if __name__ == "__main__":
-    gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
     main()
