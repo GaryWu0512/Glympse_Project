@@ -27,9 +27,10 @@ class MongoClient:
         :rtype: Single client
 
         """
-        username = "youjun"
-        password = "7RN9XqLM26aRdL8P"
-        hosts = "p-s0-enroute-new-shard-00-00-kj2j7.mongodb.net:27017,p-s0-enroute-new-shard-00-01-kj2j7.mongodb.net:27017,p-s0-enroute-new-shard-00-02-kj2j7.mongodb.net:27017/?replicaSet=p-s0-enroute-new-shard-0&authSource=admin&ssl=true"
+        # Fill these out!
+        username = "your user name"
+        password = "your password"
+        hosts = ""
 
         uri = "mongodb://{}:{}@{}".format(username,
                                           password,
