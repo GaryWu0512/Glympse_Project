@@ -392,5 +392,4 @@ def main():
 
 
 if __name__ == "__main__":
-    gmap = googlemaps.Client(key='AIzaSyC2vamy14qg0cvysoTg0w7A8Pj4Lzxn_aw')
     main()
